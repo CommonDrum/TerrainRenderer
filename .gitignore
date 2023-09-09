@@ -1,0 +1,53 @@
+# Compiled bytecode
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# IDE - Eclipse
+*.pydevproject
+.project
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+.eclipse/
+
+# IDE - IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# IDE - VS Code
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Other
+log/
+*.log
