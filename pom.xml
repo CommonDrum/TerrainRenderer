@@ -11,6 +11,17 @@
 	<lwjgl.version>3.3.2</lwjgl.version>
 	<lwjgl.natives>natives-macos-arm64</lwjgl.natives>
 </properties>
+<plugins>
+<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.0</version>
+            <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+            </configuration>
+        </plugin>
+</plugins>
 <dependencyManagement>
 	<dependencies>
 		<dependency>
