@@ -3,9 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.InputStream;
 
-import com.commondrum.terrainrenderer.Mesh;
 public class MeshLoader {
     private ArrayList<float[]> vertices = new ArrayList<float[]>();
     private ArrayList<int[]> faces = new ArrayList<int[]>();
@@ -61,6 +59,24 @@ public class MeshLoader {
         for (int[] face : faces) {
             System.out.println("f " + face[0] + " " + face[1] + " " + face[2]);
         }
+    }
+
+    public Mesh getMesh(){
+        float[] vertices = new float[this.vertices.size() * 3];
+        int[] indices = new int[faces.size() * 3];
+        int i = 0;
+        for (float[] vertex : this.vertices) {
+            vertices[i++] = vertex[0];
+            vertices[i++] = vertex[1];
+            vertices[i++] = vertex[2];
+        }
+        i = 0;
+        for (int[] face : faces) {
+            indices[i++] = face[0] - 1;
+            indices[i++] = face[1] - 1;
+            indices[i++] = face[2] - 1;
+        }
+        return new Mesh(vertices, indices);
     }
 
     public static void main(String[] args) {
