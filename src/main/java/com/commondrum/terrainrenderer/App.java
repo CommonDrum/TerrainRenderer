@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class App {
 
     private long window;
+    private Mesh mesh;
 
     public void init() {
         if (!glfwInit()) {
@@ -31,6 +32,11 @@ public class App {
         glLoadIdentity();
         glFrustum(-aspectRatio, aspectRatio, -1, 1, 1.5f, 10.0f);
         glMatrixMode(GL_MODELVIEW);
+
+        MeshLoader loader = new MeshLoader();
+        loader.load("skull.obj");
+        mesh = loader.getMesh();
+
     }
 
     public void loop() {
@@ -40,8 +46,10 @@ public class App {
             glLoadIdentity();
             glTranslatef(0.0f, 0.0f, -5.0f); 
             glRotatef((float) (glfwGetTime() * 50), 1.0f, 1.0f, 0.0f);
+            // zoom out 100 times
+            glScalef(0.01f, 0.01f, 0.01f);
 
-            drawCube();
+            drawMesh();
 
             glfwSwapBuffers(window);
             glfwPollEvents();
@@ -88,6 +96,21 @@ public class App {
         glVertex3f(-0.5f, -0.5f, 0.5f);
 
         glEnd();
+    }
+
+    public void drawMesh(){
+        float[] vertices = mesh.getVertices();
+        int[] indices = mesh.getIndices();
+
+        glBegin(GL_TRIANGLES);
+
+        for (int index : indices) {
+            int vertexStartPos = index * 3; // Since each vertex has 3 components (x, y, z)
+            glVertex3f(vertices[vertexStartPos], vertices[vertexStartPos + 1], vertices[vertexStartPos + 2]);
+        }
+
+        glEnd();
+
     }
 
     public void cleanup() {
