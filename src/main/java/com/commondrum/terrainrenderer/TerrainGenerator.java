@@ -22,15 +22,47 @@ public class TerrainGenerator {
         return noise;
     }
 
-	public static void main(String[] args){
-        TerrainGenerator terrainGenerator = new TerrainGenerator();
-		float[] noise = terrainGenerator.getNoise(1.0 / 24.0, 512, 512);
+    public float[]  getVertices(int width, int height){
 
-        for (int y = 0; y < 512; y++){
-            for (int x = 0; x < 512; x++){
-                System.out.println(noise[y * 512 + x]);
+        float scale = 10.0f;
+
+        float[] heightMap = getNoise(1.0 / 24.0, width, height);
+        float[] vertices = new float[width * height * 3];
+
+        for (int z = 0; z < height; z++){
+            for (int x = 0; x < width; x++){
+                vertices[(z * width + x) * 3] = x;
+                vertices[(z * width + x) * 3 + 1] = heightMap[z * width + x] * scale;
+                vertices[(z * width + x) * 3 + 2] = z;
             }
-            System.out.println();
         }
+        return vertices;
+    }
+
+    public int[] getIndices(int width, int height){
+
+        int indices[] = new int[(width - 1) * (height - 1) * 6];
+        int pointer = 0;
+
+        for (int z = 0; z < height - 1; z++){
+            for (int x = 0; x < width - 1; x++){
+                int topLeft = (z * width) + x;
+                int topRight = topLeft + 1;
+                int bottomLeft = ((z + 1) * width) + x;
+                int bottomRight = bottomLeft + 1;
+
+                indices[pointer++] = topLeft;
+                indices[pointer++] = bottomLeft;
+                indices[pointer++] = topRight;
+                indices[pointer++] = topRight;
+                indices[pointer++] = bottomLeft;
+                indices[pointer++] = bottomRight;
+            }
+        }
+        return indices;
+    }
+
+	public static void main(String[] args){
+        
 	}
 }

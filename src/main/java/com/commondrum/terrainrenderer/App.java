@@ -33,10 +33,8 @@ public class App {
         glFrustum(-aspectRatio, aspectRatio, -1, 1, 1.5f, 10.0f);
         glMatrixMode(GL_MODELVIEW);
 
-        MeshLoader loader = new MeshLoader();
-        loader.load("skull.obj");
-        mesh = loader.getMesh();
-
+        TerrainGenerator terrainGenerator = new TerrainGenerator();
+        mesh = new Mesh(terrainGenerator.getVertices(512, 512), terrainGenerator.getIndices(512, 512));
     }
 
     public void loop() {
@@ -45,7 +43,7 @@ public class App {
 
             glLoadIdentity();
             glTranslatef(0.0f, 0.0f, -5.0f); 
-            glRotatef((float) (glfwGetTime() * 50), 1.0f, 1.0f, 0.0f);
+            glRotatef((float) (glfwGetTime() * 50), 0f, 1.0f, 0f);
             // zoom out 100 times
             glScalef(0.01f, 0.01f, 0.01f);
 
@@ -54,48 +52,6 @@ public class App {
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
-    }
-
-    private void drawCube() {
-        glBegin(GL_QUADS);
-
-        // Front face
-        glVertex3f(-0.5f, -0.5f, 0.5f);
-        glVertex3f(0.5f, -0.5f, 0.5f);
-        glVertex3f(0.5f, 0.5f, 0.5f);
-        glVertex3f(-0.5f, 0.5f, 0.5f);
-
-        // Back face
-        glVertex3f(-0.5f, -0.5f, -0.5f);
-        glVertex3f(-0.5f, 0.5f, -0.5f);
-        glVertex3f(0.5f, 0.5f, -0.5f);
-        glVertex3f(0.5f, -0.5f, -0.5f);
-
-        // Left face
-        glVertex3f(-0.5f, -0.5f, -0.5f);
-        glVertex3f(-0.5f, -0.5f, 0.5f);
-        glVertex3f(-0.5f, 0.5f, 0.5f);
-        glVertex3f(-0.5f, 0.5f, -0.5f);
-
-        // Right face
-        glVertex3f(0.5f, -0.5f, -0.5f);
-        glVertex3f(0.5f, 0.5f, -0.5f);
-        glVertex3f(0.5f, 0.5f, 0.5f);
-        glVertex3f(0.5f, -0.5f, 0.5f);
-
-        // Top face
-        glVertex3f(-0.5f, 0.5f, -0.5f);
-        glVertex3f(-0.5f, 0.5f, 0.5f);
-        glVertex3f(0.5f, 0.5f, 0.5f);
-        glVertex3f(0.5f, 0.5f, -0.5f);
-
-        // Bottom face
-        glVertex3f(-0.5f, -0.5f, -0.5f);
-        glVertex3f(0.5f, -0.5f, -0.5f);
-        glVertex3f(0.5f, -0.5f, 0.5f);
-        glVertex3f(-0.5f, -0.5f, 0.5f);
-
-        glEnd();
     }
 
     public void drawMesh(){
