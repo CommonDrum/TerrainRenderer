@@ -1,8 +1,5 @@
 package com.commondrum.terrainrenderer;
 
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.*;
 
 public class TerrainGenerator {
 
@@ -29,13 +26,21 @@ public class TerrainGenerator {
         float[] heightMap = getNoise(1.0 / 24.0, width, height);
         float[] vertices = new float[width * height * 3];
 
+        //make height/2 width/2 the center of the map
+        int halfWidth = width / 2;
+        int halfHeight = height / 2;
+
+        //create vertices
         for (int z = 0; z < height; z++){
             for (int x = 0; x < width; x++){
-                vertices[(z * width + x) * 3] = x;
-                vertices[(z * width + x) * 3 + 1] = heightMap[z * width + x] * scale;
-                vertices[(z * width + x) * 3 + 2] = z;
+                float y = (float) heightMap[z * width + x];
+                vertices[(z * width + x) * 3] = (x - halfWidth) / scale;
+                vertices[(z * width + x) * 3 + 1] = y;
+                vertices[(z * width + x) * 3 + 2] = (z - halfHeight) / scale;
             }
         }
+
+
         return vertices;
     }
 
