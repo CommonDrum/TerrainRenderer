@@ -7,5 +7,5 @@ uniform mat4 u_mvpMatrix;
 
 void main() {
     v_height = a_position.y;
-    gl_Position = u_mvpMatrix * a_position;
+    gl_Position = a_position;
 }
