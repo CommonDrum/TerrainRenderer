@@ -5,6 +5,9 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
+import org.lwjgl.BufferUtils;
+import java.nio.*;
+
 
 
 
@@ -40,13 +43,6 @@ public class App {
 
         glEnable(GL_DEPTH_TEST);
 
-        float aspectRatio = (float) width / height;
-        
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glFrustum(-aspectRatio, aspectRatio, -1, 1, 1.5f, 10.0f);
-        glMatrixMode(GL_MODELVIEW);
-
         shader = new Shader("src/main/shaders/vertex.glsl", "src/main/shaders/fragment.glsl");
 
     }
@@ -60,26 +56,12 @@ public class App {
 
     public void loop() throws Exception {
 
-     
-       
 
         while (!glfwWindowShouldClose(window)) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             shader.use();
             glUseProgram(shader.getId());
-
-
-            glLoadIdentity();
-            // make isometric view
-            glTranslatef(0.0f, 0.0f, -5.0f);
-            glRotatef(45.0f, 1.0f, 0.0f, 0.0f);
-            glRotatef(45.0f, 0.0f, 1.0f, 0.0f);
-            // zoom out 10x
-            glScalef(0.1f, 0.1f, 0.1f);
-            
-            // rotate around y axis
-            glRotatef((float) glfwGetTime() * 50.0f, 0.0f, 1.0f, 0.0f);
 
             drawMesh();
 
